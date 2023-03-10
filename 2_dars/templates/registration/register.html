@@ -1,0 +1,71 @@
+{% extends 'base-fullscreen.html' %}
+
+{% block title %} Sign Up {% endblock %}
+
+{% block content %}
+
+    <div class="auth-wrapper">
+        <div class="auth-content">
+            <div class="card">
+                <div class="card-body text-center" style="background-color: blue;">
+                    <div class="mb-4">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <h3 class="mb-4"><a href="/">NEWS.UZ</a></h3>
+                    <h3 class="mb-4">Sign Up</h3>
+
+                    <span class="mb-0 text-muted">
+                        {% if msg %}
+                            <span class="text-danger">{{ msg | safe }}</span>
+                        {% endif %}
+                    </span>
+
+                    {% if succes %}
+
+                        <a href="#" class="btn btn-primary shadow-2 mb-4">Sign In</a>
+
+                    {% else %}
+
+                        <form role="form" method="post" action=""></form>
+
+                            {% csrf_token %}
+
+                            <div class="input-group mb-3">
+                                {{ form.username }}
+                            </div>
+                            <span class="text-error">{{ form.username.errors }}</span>
+
+                            <div class="input-group mb-3">
+                                {{ form.first_name }}
+                            </div>
+                            <span class="text-error">{{ form.first_name.errors }}</span>                              
+ 
+                            <div class="input-group mb-3">
+                                {{ form.email }}
+                            </div>
+                            <span class="text-error">{{ form.email.errors }}</span>                            
+
+                            <div class="input-group mb-3">
+                                {{ form.password1 }}
+                            </div>
+                            <span class="text-error">{{ form.password1.errors }}</span>
+                            
+                            <div class="input-group mb-3">
+                                {{ form.password2 }}
+                            </div>
+                            <span class="text-error">{{ form.password2.errors }}</span>    
+                            
+                            
+                            <button type="submit" name="register" class="btn btn-primary shadow-2 mb-4">Register</button>
+
+                        </form>
+
+                        <p class="mb-0 text-muted">Already have an account? <a href="{% url 'login:login' %}">Login</a></p>
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

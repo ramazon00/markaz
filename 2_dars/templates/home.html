@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Single{% endblock %}
+    
+{% block content %}
+<main class="container p-2">
+    <div class="card text-center mt-4">
+        <div class="card-header">
+            <span class="badge rounded-pill bg-{{ post.status_color }}">
+                <big>
+                <a class="navbar-brand p-2" href="/" style="color: rgb(132, 0, 139);">news.uz</a>
+                </big>
+            </span>
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p class="card-text">{{ post.sammury }}</p>
+            <a  class="btn btn-lg btn-{{ post.status_color }}" href="{{ post.get_absolute_url }}" role="button" style="color: black">Etiboringiz uchun raxmat!</a>
+            <a  class="btn btn-lg btn-{{ post.status_color }}" href="{{ post.get_absolute_url }}" role="button" style="color: darkorange;">Postni ko'rish</a>
+        </div>
+        <div class="card-footer text-muted">
+            Author: {{ post.author }} | Time: {{ post.publish }}
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+

@@ -1,0 +1,25 @@
+{% load static %}
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand p-2" href="/" aria-sort="descending">NEWS.UZ</a>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'core:user' %}">Users List</a>
+        </li>
+      </ul>
+    <div class="d-flex p-2">
+      {% if request.user.is_authenticated %}
+      <button type="button" class="btn btn-outline-light me-2">
+        <a class="nav-link" href="{% url 'login:logout' %}">Logout</a>
+        {% else %}
+      <button type="button" class="btn btn-outline-light me-2">
+        <a class="nav-link" href="{% url 'login:login' %}">Login</a>
+      </button>
+      <button type="button" class="btn btn-warning">
+        <a class="nav-link" href="{% url 'login:register' %}">Sign Up</a>
+      </button>
+      {% endif %}
+    </div>
+  </div>
+</nav>
