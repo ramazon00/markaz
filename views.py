@@ -1,50 +1,30 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import UpdateView, DeleteView, CreateView, ListView
-from django.urls import reverse_lazy
-from .models import Post
-from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate
+from .forms import SignUpForm
 
 
-# def home(request):
-
-# 	all_posts = Post.newmanager.all()
-
-# Oldin bu bo'lgan
-# 	return render(request, 'home.html', {'posts' : all_posts})
-
-class home(ListView):
-	model = Post
-	template_name = 'home.html'
 
 
-def post_single(request, post):
+def register_user(request):
+    msg = None
+    success = False
 
-    post = get_object_or_404(Post, slug=post, status='published')
-    return render(request, 'single.html', {'post' : post})
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=raw_password)
 
-def user(request):
+            msg = 'User created successfully.'
+            success = True
 
-    users = User.objects.all()
+            return redirect("/accounts/login/")
 
+        else:
+            msg = 'Form is not valid'
+    else:
+        form = SignUpForm()
 
-    return render(request, 'user.html', {'posts' : users})
-
-class AddView(CreateView):
-	model = Post
-	template_name = 'add.html'
-	fields = "__all__"
-	succes_url = reverse_lazy('core:home')
-
-class EditView(UpdateView):
-	model = Post
-	template_name = 'edit.html'
-	fields = "__all__"
-	pk_url_kwarg = "pk"
-	succes_url = reverse_lazy('core:home')
-
-class Delete(DeleteView):
-	model = Post
-	pk_url_kwarg = "pk"
-	succes_url = reverse_lazy('core:home')
-	template_name = 'confirm-delete.html'
-
+    return render(request, "registration/register.html", {"form": form, "msg": msg, "success": success})
